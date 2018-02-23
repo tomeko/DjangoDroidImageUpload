@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from django.shortcuts import render
 import os
 
 def index(request):
@@ -20,3 +21,9 @@ def handle_uploaded_file(f):
         destination.write(chunk)
     destination.close()
     return fname
+
+# if upload files are images
+def view_images(request):
+    images = [f for f in os.listdir(settings.MEDIA_ROOT)]
+    print(images)
+    return render(request, "djangodroid/index.html", {'images': images})
